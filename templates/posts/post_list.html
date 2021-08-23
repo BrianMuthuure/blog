@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="post-list mt-4">
+    {% for post in posts %}
+    <div class="card">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{ post.image.url }}" class="img-fluid">
+            </div>
+
+            <div class="col-md-8">
+                <div class="contents">
+                    <h2 class=""><a href="">{{ post.title }}</a> </h2>
+                    <p>{{ post.content }}</p>
+
+                    <small class="text-muted">Posted by <a href="">{{ post.author }}</a>
+                        on {{ post.date }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

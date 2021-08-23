@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .errorlist li{
+    color:red;
+    }
+</style>
+<div class="registration">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h3>Register</h3><hr>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    {{ form.as_p}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <button class="btn btn-outline-info" type="submit">Register</button>
+                </div>
+            </div>
+            <small class="text-muted">
+                Already have an account ?
+                <a href="{% url 'login' %}" >Login</a>
+            </small>
+        </form>
+</div>
+{% endblock %}
