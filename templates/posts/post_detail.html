@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="post-detail py-3">
+    <h2>Post Detail</h2><hr>
+    <div class="card">
+        <div class="row">
+            <div class="col-md-5">
+                <img src="{{ post.image.url }}" class="img-fluid">
+            </div>
+            <div class="col-md-7">
+                <h2 class="mt-4">{{ post.title }}</h2>
+                <p class="content">{{ post.content }}</p>
+                {% if request.user.is_authenticated %}
+                <div class="buttons mt-4 mb-4">
+                    <span>
+                        <a href="{% url 'post:post_update' post.pk %}" class="btn btn-success">Update post</a>
+                        <a href="{% url 'post:post_delete' post.pk %}" class="btn btn-danger">Delete post</a>
+                    </span>
+                </div>
+                {% endif %}
+
+                <small class="text-muted">
+                    Posted by {{ post.author }}
+                        on {{ post.date }}
+                </small><br>
+                <h4>Total Comments</h4>
+                <a href="">{{ post.number_of_comments }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="row">
+            <div class="col-md-5 p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ comment_form|crispy }}
+                        <button class="btn btn-success mt-3" type="submit">Add comment</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-7">
+                <div class="comments-section py-2">
+                    <h2>Comments</h2><hr>
+                    {% for comment in comments %}
+                    <div class="comment">
+                        <p class="info">
+                            Comment {{ forloop.counter }} by  {{ comment.name }}
+                            {{ comment.date_created|timesince }} ago
+                        </p>
+                        <small class="text-muted">{{ comment.body|safe}}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
